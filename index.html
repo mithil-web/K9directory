@@ -3,149 +3,476 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Find a Canines Can Care trainer</title>
+<title>CCC Trainer Directory</title>
 <meta name="description" content="Find a certified Canines Can Care dog trainer near you" />
 <meta name="theme-color" content="#1B3F72" />
 <link rel="manifest" href="manifest.json" />
-<!-- iOS home screen support -->
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="CCC Trainers" />
-<link rel="apple-touch-icon" href="icons/icon-192.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #F7F7F5;
-    color: #1a1a1a;
-    line-height: 1.4;
-    -webkit-font-smoothing: antialiased;
-  }
-  .wrap {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 32px 16px 64px;
-  }
-  h1 {
-    font-size: 24px;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-  }
-  .subline {
-    margin-top: 6px;
-    font-size: 14px;
-    color: #6b6b69;
-  }
-  .filters {
-    display: flex;
-    gap: 12px;
-    margin-top: 24px;
-  }
-  .field { flex: 1; display: flex; flex-direction: column; gap: 5px; }
-  .field label {
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: #8a8a88;
-  }
-  select {
-    font-family: inherit;
-    font-size: 14px;
-    color: #1a1a1a;
-    padding: 9px 12px;
-    border: 0.5px solid #d8d8d6;
-    border-radius: 8px;
-    background: #fff;
-    cursor: pointer;
-    appearance: none;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238a8a88' stroke-width='2'><polyline points='6 9 12 15 18 9'/></svg>");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-  }
-  .count {
-    margin-top: 20px;
-    font-size: 13px;
-    color: #6b6b69;
-  }
-  .list {
-    margin-top: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .card {
-    background: #fff;
-    border: 0.5px solid #E5E5E3;
-    border-radius: 12px;
-    padding: 14px 16px;
-  }
-  .card .name { font-size: 15px; font-weight: 600; }
-  .card .city { font-size: 13px; color: #6b6b69; margin-top: 2px; }
-  .card .areas { font-size: 12px; color: #9a9a98; margin-top: 2px; }
-  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-  .chip {
-    font-size: 11px;
-    border-radius: 20px;
-    padding: 3px 9px;
-    white-space: nowrap;
-  }
-  .chip.course { background: #E6EEF8; color: #1B3F72; }
-  .chip.service { background: #F0EFEC; color: #555552; }
-  .divider {
-    border: none;
-    border-top: 0.5px solid #E5E5E3;
-    margin: 12px 0 10px;
-  }
-  .contact {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-    font-size: 13px;
-    color: #555552;
-  }
-  .contact .item { display: inline-flex; align-items: center; gap: 6px; }
-  .contact svg { flex: none; }
-  .contact a { color: #1B3F72; text-decoration: none; }
-  .contact a:hover { text-decoration: underline; }
-  .empty {
-    margin-top: 24px;
-    text-align: center;
-    font-size: 14px;
-    color: #9a9a98;
-    padding: 40px 0;
-  }
-  @media (max-width: 560px) {
-    .filters { flex-direction: column; }
-    .field { width: 100%; }
-  }
+:root {
+  --navy: #1B3F72;
+  --navy-dark: #122d54;
+  --navy-light: #2a5298;
+  --navy-pale: #E6EEF8;
+  --grey-100: #F7F7F5;
+  --grey-200: #EFEFED;
+  --grey-300: #E0E0DD;
+  --grey-400: #C0C0BC;
+  --grey-600: #7A7A76;
+  --grey-800: #3A3A38;
+  --white: #ffffff;
+  --shadow-sm: 0 1px 3px rgba(27,63,114,0.06), 0 1px 2px rgba(27,63,114,0.04);
+  --shadow-md: 0 4px 16px rgba(27,63,114,0.10), 0 2px 6px rgba(27,63,114,0.06);
+  --shadow-lg: 0 12px 32px rgba(27,63,114,0.16), 0 4px 12px rgba(27,63,114,0.08);
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--grey-100);
+  color: var(--grey-800);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(-45deg, #0d2447, #1B3F72, #1e4d8c, #163660, #243f6e, #0f2d54);
+  background-size: 400% 400%;
+  animation: gradientFlow 12s ease infinite;
+  padding: 48px 20px 56px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 60%, rgba(255,255,255,0.04) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 20%, rgba(255,255,255,0.03) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+@keyframes gradientFlow {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.hero-paw {
+  font-size: 36px;
+  display: block;
+  margin-bottom: 12px;
+  animation: pawBounce 2.4s ease-in-out infinite;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+}
+
+@keyframes pawBounce {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50%       { transform: translateY(-6px) rotate(5deg); }
+}
+
+.hero-title {
+  font-size: clamp(26px, 6vw, 40px);
+  font-weight: 900;
+  color: var(--white);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.hero-title span {
+  background: linear-gradient(135deg, #8fb8f5, #c5dafc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  margin-top: 10px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.65);
+  font-weight: 400;
+  max-width: 340px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.55;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: var(--radius-pill);
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.9);
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(8px);
+}
+
+.hero-badge .dot {
+  width: 6px; height: 6px;
+  background: #6ee7b7;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgba(110,231,183,0.3);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(110,231,183,0.3); }
+  50%       { box-shadow: 0 0 0 5px rgba(110,231,183,0.1); }
+}
+
+/* FILTERS */
+.filters-wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 16px;
+  position: relative;
+  z-index: 10;
+  transform: translateY(-28px);
+}
+
+.filters-card {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: 16px;
+  display: flex;
+  gap: 12px;
+}
+
+.filter-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.filter-field label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--grey-600);
+  padding-left: 2px;
+}
+
+.select-wrap {
+  position: relative;
+}
+
+.select-wrap select {
+  width: 100%;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--navy);
+  padding: 10px 36px 10px 12px;
+  border: 1.5px solid var(--grey-200);
+  border-radius: var(--radius-sm);
+  background: var(--grey-100);
+  cursor: pointer;
+  appearance: none;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  outline: none;
+}
+
+.select-wrap select:focus {
+  border-color: var(--navy);
+  box-shadow: 0 0 0 3px rgba(27,63,114,0.12);
+  background: var(--white);
+}
+
+.select-wrap::after {
+  content: '';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0; height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid var(--navy-light);
+  pointer-events: none;
+}
+
+/* CONTENT AREA */
+.content {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 16px 80px;
+  margin-top: -12px;
+}
+
+.count-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  padding: 0 2px;
+}
+
+.count-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--grey-600);
+}
+
+.count-badge {
+  background: var(--navy-pale);
+  color: var(--navy);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  transition: all 0.3s ease;
+}
+
+/* CARDS */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  padding: 18px 20px;
+  transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s ease;
+  cursor: default;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: cardIn 0.45s cubic-bezier(0.22,1,0.36,1) forwards;
+  border: 1px solid rgba(27,63,114,0.05);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+@keyframes cardIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.card-identity { flex: 1; min-width: 0; }
+
+.card-avatar {
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--navy-pale), #c5dafc);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--navy);
+  flex-shrink: 0;
+  letter-spacing: -0.5px;
+}
+
+.card-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--grey-800);
+  line-height: 1.2;
+}
+
+.card-location {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 3px;
+}
+
+.card-city {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--navy);
+}
+
+.card-areas {
+  font-size: 12px;
+  color: var(--grey-600);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.location-dot {
+  color: var(--grey-400);
+  font-size: 11px;
+}
+
+/* TAGS */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+}
+
+.chip {
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: var(--radius-pill);
+  padding: 4px 10px;
+  white-space: nowrap;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  cursor: default;
+}
+
+.chip:hover {
+  transform: scale(1.05);
+}
+
+.chip.course {
+  background: var(--navy-pale);
+  color: var(--navy);
+}
+
+.chip.service {
+  background: var(--grey-200);
+  color: var(--grey-800);
+}
+
+/* CONTACT */
+.divider {
+  border: none;
+  border-top: 1px solid var(--grey-200);
+  margin: 14px 0 12px;
+}
+
+.contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--grey-600);
+  background: var(--grey-100);
+  border-radius: var(--radius-sm);
+  padding: 5px 10px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.contact-item svg { flex-shrink: 0; }
+
+.contact-item a {
+  color: var(--navy);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.contact-item:has(a):hover {
+  background: var(--navy-pale);
+  color: var(--navy);
+}
+
+/* EMPTY */
+.empty {
+  text-align: center;
+  padding: 60px 20px;
+  animation: cardIn 0.4s ease forwards;
+}
+
+.empty-icon { font-size: 48px; display: block; margin-bottom: 12px; }
+.empty-title { font-size: 17px; font-weight: 700; color: var(--grey-800); }
+.empty-sub { font-size: 14px; color: var(--grey-600); margin-top: 6px; }
+
+/* FILTER TRANSITION */
+.list.filtering .card {
+  animation: cardOut 0.2s ease forwards;
+}
+
+@keyframes cardOut {
+  to { opacity: 0; transform: translateY(8px); }
+}
+
+/* MOBILE */
+@media (max-width: 520px) {
+  .hero { padding: 40px 20px 52px; }
+  .filters-card { flex-direction: column; gap: 10px; }
+  .card-avatar { width: 36px; height: 36px; font-size: 14px; border-radius: 10px; }
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>Find a Canines Can Care trainer</h1>
-  <p class="subline">Certified graduates of Shirin Dhabhar's Professional Canine Trainer Course</p>
 
-  <div class="filters">
-    <div class="field">
+<!-- HERO -->
+<header class="hero">
+  <span class="hero-paw">🐾</span>
+  <h1 class="hero-title">Find a <span>CCC Trainer</span><br>near you</h1>
+  <p class="hero-sub">Certified graduates of Shirin Dhabhar's Professional Canine Trainer Course</p>
+  <div class="hero-badge">
+    <span class="dot"></span>
+    <span id="totalCount">46 certified trainers</span>
+  </div>
+</header>
+
+<!-- FILTERS -->
+<div class="filters-wrap">
+  <div class="filters-card">
+    <div class="filter-field">
       <label for="cityFilter">City</label>
-      <select id="cityFilter"></select>
+      <div class="select-wrap">
+        <select id="cityFilter"></select>
+      </div>
     </div>
-    <div class="field">
-      <label for="serviceFilter">Service</label>
-      <select id="serviceFilter"></select>
+    <div class="filter-field">
+      <label for="serviceFilter">Course / Service</label>
+      <div class="select-wrap">
+        <select id="serviceFilter"></select>
+      </div>
     </div>
   </div>
-
-  <p class="count" id="count"></p>
-  <div class="list" id="list"></div>
 </div>
 
+<!-- CONTENT -->
+<main class="content">
+  <div class="count-row">
+    <span class="count-label" id="countLabel">All trainers</span>
+    <span class="count-badge" id="countBadge"></span>
+  </div>
+  <div class="list" id="list"></div>
+</main>
+
 <script>
-// ---- Raw dataset (cleaned inline) ----
 const RAW = [
   { name: "Abhishek Murdeshwar", phone: "9513557366", email: "talesofpawsstivity@gmail.com", city: "Mumbai", areas: "North, South, East, West, Central", courses: ["Basic Trainer Course", "Advanced Trainer Course", "Behaviour Course", "Therapy Dog Course"], services: [], website: "" },
   { name: "Adrija Majethia", phone: "9653663229", email: "pawstrucktraining@gmail.com", city: "Mumbai", areas: "South, West, Central", courses: ["Basic Trainer Course", "Advanced Trainer Course"], services: ["Pet sitting"], website: "" },
@@ -195,180 +522,123 @@ const RAW = [
   { name: "Zenobia Jungalwalla", phone: "9820502795", email: "zenobiajungalwalla@gmail.com", city: "Mumbai", areas: "West", courses: ["Basic Trainer Course", "Advanced Trainer Course"], services: [], website: "" }
 ];
 
-// ---- Cleaning helpers ----
-const CITY_MAP = {
-  "mumbai": "Mumbai", "pune": "Pune", "bangalore": "Bangalore",
-  "navi mumbai": "Navi Mumbai", "thane": "Thane", "kolkata": "Kolkata",
-  "hyderabad": "Hyderabad", "jaipur": "Jaipur", "surat": "Surat",
-  "nagpur": "Nagpur", "ahmedabad": "Ahmedabad"
-};
-const COURSE_MAP = {
-  "Advanced Trainer Course - module 3": "Advanced Trainer Course",
-  "Advanced Canine Behaviour Course": "Behaviour Course",
-  "Kennelling and Pet Sitting Course": "Kennelling & Pet Sitting",
-  "Therapy Dog Course": "Therapy Dog Course",
-  "Aggression Course": "Aggression Course",
-  "Basic Trainer Course": "Basic Trainer Course"
-};
-const VALID_COURSES = new Set([
-  "Basic Trainer Course", "Advanced Trainer Course", "Behaviour Course",
-  "Therapy Dog Course", "Aggression Course", "Kennelling & Pet Sitting"
-]);
+// Data cleaning
+const CITY_MAP = { "mumbai":"Mumbai","pune":"Pune","bangalore":"Bangalore","navi mumbai":"Navi Mumbai","thane":"Thane","kolkata":"Kolkata","hyderabad":"Hyderabad","jaipur":"Jaipur","surat":"Surat","nagpur":"Nagpur","ahmedabad":"Ahmedabad" };
+const COURSE_MAP = { "Advanced Trainer Course - module 3":"Advanced Trainer Course","Advanced Canine Behaviour Course":"Behaviour Course","Kennelling and Pet Sitting Course":"Kennelling & Pet Sitting" };
+const VALID_COURSES = new Set(["Basic Trainer Course","Advanced Trainer Course","Behaviour Course","Therapy Dog Course","Aggression Course","Kennelling & Pet Sitting"]);
 
-function cleanCity(c) {
-  const t = (c || "").trim();
-  return CITY_MAP[t.toLowerCase()] || t;
-}
-function cleanPhone(p) {
-  // strip any trailing ".0" floats and non-digits
-  return String(p).replace(/\.0+$/, "").replace(/[^\d]/g, "");
-}
-function normCourse(c) {
-  const t = (c || "").trim();
-  if (/john rogerson/i.test(t) || /workshop/i.test(t)) return null; // external — ignore
-  if (COURSE_MAP[t]) return COURSE_MAP[t];
-  return VALID_COURSES.has(t) ? t : null;
-}
-function cleanCourses(arr) {
-  const out = [];
-  (arr || []).forEach(c => {
-    const n = normCourse(c);
-    if (n && !out.includes(n)) out.push(n);
-  });
-  return out;
-}
+function cleanCity(c) { const t=(c||"").trim(); return CITY_MAP[t.toLowerCase()]||t; }
+function cleanPhone(p) { return String(p).replace(/\.0+$/,"").replace(/[^\d]/g,""); }
+function normCourse(c) { const t=(c||"").trim(); if(/john rogerson|workshop/i.test(t)) return null; return COURSE_MAP[t]||(VALID_COURSES.has(t)?t:null); }
+function cleanCourses(arr) { const out=[]; (arr||[]).forEach(c=>{const n=normCourse(c);if(n&&!out.includes(n))out.push(n);}); return out; }
 function parseWeb(raw) {
-  let v = (raw || "").trim();
-  if (!v) return { website: "", instagram: "" };
-  // markdown link [text](url) -> use url
-  const md = v.match(/\]\((https?:\/\/[^)]+)\)/);
-  if (md) v = md[1];
-  if (v.startsWith("@") || /instagram\.com/i.test(v)) {
-    let url = v;
-    if (v.startsWith("@")) url = "https://instagram.com/" + v.slice(1);
-    else if (!/^https?:\/\//i.test(v)) url = "https://" + v;
-    return { website: "", instagram: url };
-  }
-  if (!/^https?:\/\//i.test(v)) v = "https://" + v;
-  return { website: v, instagram: "" };
+  let v=(raw||"").trim(); if(!v) return {website:"",instagram:""};
+  const md=v.match(/\]\((https?:\/\/[^)]+)\)/); if(md) v=md[1];
+  if(v.startsWith("@")||/instagram\.com/i.test(v)){let u=v;if(v.startsWith("@"))u="https://instagram.com/"+v.slice(1);else if(!/^https?:\/\//i.test(v))u="https://"+v;return{website:"",instagram:u};}
+  if(!/^https?:\/\//i.test(v))v="https://"+v; return{website:v,instagram:""};
 }
+function mergeField(a,b){if(Array.isArray(a))return(b&&b.length>a.length)?b:a;return(b&&String(b).length>String(a||"").length)?b:a;}
 
-// ---- Build cleaned dataset (dedup by email) ----
-function mergeField(a, b) {
-  // keep the more complete (longer / non-empty) value
-  if (Array.isArray(a)) return (b && b.length > a.length) ? b : a;
-  return (b && String(b).length > String(a || "").length) ? b : a;
-}
-const byEmail = new Map();
-RAW.forEach(r => {
-  const web = parseWeb(r.website);
-  const entry = {
-    name: (r.name || "").trim().replace(/\s+/g, " "),
-    phone: cleanPhone(r.phone),
-    email: (r.email || "").trim(),
-    city: cleanCity(r.city),
-    areas: (r.areas || "").trim(),
-    courses: cleanCourses(r.courses),
-    services: (r.services || []).map(s => s.trim()).filter(Boolean),
-    website: web.website,
-    instagram: web.instagram
-  };
-  const key = entry.email.toLowerCase();
-  if (byEmail.has(key)) {
-    const ex = byEmail.get(key);
-    ex.name = mergeField(ex.name, entry.name);
-    ex.phone = mergeField(ex.phone, entry.phone);
-    ex.city = mergeField(ex.city, entry.city);
-    ex.areas = mergeField(ex.areas, entry.areas);
-    ex.courses = mergeField(ex.courses, entry.courses);
-    ex.services = mergeField(ex.services, entry.services);
-    ex.website = mergeField(ex.website, entry.website);
-    ex.instagram = mergeField(ex.instagram, entry.instagram);
-  } else {
-    byEmail.set(key, entry);
-  }
+const byEmail=new Map();
+RAW.forEach(r=>{
+  const web=parseWeb(r.website);
+  const e={name:(r.name||"").trim().replace(/\s+/g," "),phone:cleanPhone(r.phone),email:(r.email||"").trim(),city:cleanCity(r.city),areas:(r.areas||"").trim(),courses:cleanCourses(r.courses),services:(r.services||[]).map(s=>s.trim()).filter(Boolean),website:web.website,instagram:web.instagram};
+  const k=e.email.toLowerCase();
+  if(byEmail.has(k)){const x=byEmail.get(k);x.name=mergeField(x.name,e.name);x.phone=mergeField(x.phone,e.phone);x.city=mergeField(x.city,e.city);x.areas=mergeField(x.areas,e.areas);x.courses=mergeField(x.courses,e.courses);x.services=mergeField(x.services,e.services);x.website=mergeField(x.website,e.website);x.instagram=mergeField(x.instagram,e.instagram);}
+  else byEmail.set(k,e);
 });
-const TRAINERS = Array.from(byEmail.values());
+const TRAINERS=Array.from(byEmail.values());
 
-// ---- Filter options ----
-const cities = Array.from(new Set(TRAINERS.map(t => t.city))).sort();
-const serviceSet = new Set();
-TRAINERS.forEach(t => {
-  t.courses.forEach(c => serviceSet.add(c));
-  t.services.forEach(s => serviceSet.add(s));
-});
-const allServices = Array.from(serviceSet).sort();
+// Filter dropdowns
+const cities=Array.from(new Set(TRAINERS.map(t=>t.city))).sort();
+const svcSet=new Set();
+TRAINERS.forEach(t=>{t.courses.forEach(c=>svcSet.add(c));t.services.forEach(s=>svcSet.add(s));});
+const allSvcs=Array.from(svcSet).sort();
 
-const cityFilter = document.getElementById("cityFilter");
-const serviceFilter = document.getElementById("serviceFilter");
-cityFilter.innerHTML = '<option value="">All cities</option>' +
-  cities.map(c => `<option value="${c}">${c}</option>`).join("");
-serviceFilter.innerHTML = '<option value="">All services</option>' +
-  allServices.map(s => `<option value="${s}">${s}</option>`).join("");
+const cityEl=document.getElementById("cityFilter");
+const svcEl=document.getElementById("serviceFilter");
+cityEl.innerHTML='<option value="">All cities</option>'+cities.map(c=>`<option value="${c}">${c}</option>`).join("");
+svcEl.innerHTML='<option value="">All courses & services</option>'+allSvcs.map(s=>`<option value="${s}">${s}</option>`).join("");
+document.getElementById("totalCount").textContent=TRAINERS.length+" certified trainers";
 
-// ---- Icons ----
-const ICON = {
-  phone: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9a9a98" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
-  mail: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9a9a98" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>',
-  globe: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9a9a98" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
-  instagram: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9a9a98" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>'
+// Icons
+const ICO={
+  phone:`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>`,
+  mail:`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>`,
+  globe:`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
+  ig:`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>`,
+  pin:`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`
 };
 
-const esc = s => String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const esc=s=>String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 
-// ---- Render ----
-const listEl = document.getElementById("list");
-const countEl = document.getElementById("count");
+function initials(name){ return name.split(" ").slice(0,2).map(w=>w[0]).join("").toUpperCase(); }
 
-function render() {
-  const city = cityFilter.value;
-  const service = serviceFilter.value;
-  const matches = TRAINERS.filter(t => {
-    const cityOk = !city || t.city === city;
-    const svcOk = !service || t.courses.includes(service) || t.services.includes(service);
-    return cityOk && svcOk;
-  });
+// Render
+const listEl=document.getElementById("list");
+const countLabel=document.getElementById("countLabel");
+const countBadge=document.getElementById("countBadge");
 
-  if (matches.length === 0) {
-    countEl.textContent = "";
-    listEl.innerHTML = '<div class="empty">No trainers found — try a different filter</div>';
-    return;
-  }
+let renderTimer=null;
 
-  countEl.textContent = "Showing " + matches.length + " trainer" + (matches.length === 1 ? "" : "s");
+function render(){
+  const city=cityEl.value, svc=svcEl.value;
+  const matches=TRAINERS.filter(t=>(!city||t.city===city)&&(!svc||t.courses.includes(svc)||t.services.includes(svc)));
 
-  listEl.innerHTML = matches.map(t => {
-    const courseChips = t.courses.map(c => `<span class="chip course">${esc(c)}</span>`).join("");
-    const serviceChips = t.services.map(s => `<span class="chip service">${esc(s)}</span>`).join("");
-    const tags = (courseChips || serviceChips)
-      ? `<div class="tags">${courseChips}${serviceChips}</div>` : "";
-    const areas = t.areas
-      ? `<div class="areas">${esc(t.areas)}</div>` : "";
+  listEl.classList.add("filtering");
 
-    const contactItems = [];
-    if (t.phone) contactItems.push(`<span class="item">${ICON.phone}${esc(t.phone)}</span>`);
-    if (t.email) contactItems.push(`<span class="item">${ICON.mail}${esc(t.email)}</span>`);
-    if (t.instagram) contactItems.push(`<span class="item">${ICON.instagram}<a href="${esc(t.instagram)}" target="_blank" rel="noopener">${esc(t.instagram.replace(/^https?:\/\//,''))}</a></span>`);
-    else if (t.website) contactItems.push(`<span class="item">${ICON.globe}<a href="${esc(t.website)}" target="_blank" rel="noopener">${esc(t.website.replace(/^https?:\/\//,''))}</a></span>`);
+  clearTimeout(renderTimer);
+  renderTimer=setTimeout(()=>{
+    listEl.classList.remove("filtering");
 
-    return `<div class="card">
-      <div class="name">${esc(t.name)}</div>
-      <div class="city">${esc(t.city)}</div>
-      ${areas}
-      ${tags}
-      <hr class="divider" />
-      <div class="contact">${contactItems.join("")}</div>
-    </div>`;
-  }).join("");
+    if(matches.length===0){
+      countLabel.textContent="No results";
+      countBadge.textContent="0";
+      listEl.innerHTML=`<div class="empty"><span class="empty-icon">🔍</span><div class="empty-title">No trainers found</div><div class="empty-sub">Try a different city or service filter</div></div>`;
+      return;
+    }
+
+    const isFiltered=city||svc;
+    countLabel.textContent=isFiltered?"Matching trainers":"All trainers";
+    countBadge.textContent=matches.length;
+
+    listEl.innerHTML=matches.map((t,i)=>{
+      const courseChips=t.courses.map(c=>`<span class="chip course">${esc(c)}</span>`).join("");
+      const svcChips=t.services.map(s=>`<span class="chip service">${esc(s)}</span>`).join("");
+      const tags=(courseChips||svcChips)?`<div class="tags">${courseChips}${svcChips}</div>`:"";
+      const areas=t.areas?`<div class="card-areas">${esc(t.areas)}</div>`:"";
+
+      const contact=[];
+      if(t.phone) contact.push(`<span class="contact-item">${ICO.phone}${esc(t.phone)}</span>`);
+      if(t.email) contact.push(`<span class="contact-item">${ICO.mail}${esc(t.email)}</span>`);
+      if(t.instagram) contact.push(`<span class="contact-item">${ICO.ig}<a href="${esc(t.instagram)}" target="_blank" rel="noopener">${esc(t.instagram.replace(/^https?:\/\//,""))}</a></span>`);
+      else if(t.website) contact.push(`<span class="contact-item">${ICO.globe}<a href="${esc(t.website)}" target="_blank" rel="noopener">${esc(t.website.replace(/^https?:\/\//,""))}</a></span>`);
+
+      return `<div class="card" style="animation-delay:${i*35}ms">
+        <div class="card-top">
+          <div class="card-identity">
+            <div class="card-name">${esc(t.name)}</div>
+            <div class="card-location">
+              <span style="color:#7A7A76;display:inline-flex;align-items:center">${ICO.pin}</span>
+              <span class="card-city">${esc(t.city)}</span>
+            </div>
+            ${areas}
+          </div>
+          <div class="card-avatar">${initials(t.name)}</div>
+        </div>
+        ${tags}
+        <hr class="divider"/>
+        <div class="contact">${contact.join("")}</div>
+      </div>`;
+    }).join("");
+  }, listEl.children.length>0 ? 180 : 0);
 }
 
-cityFilter.addEventListener("change", render);
-serviceFilter.addEventListener("change", render);
+cityEl.addEventListener("change",render);
+svcEl.addEventListener("change",render);
 render();
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
-}
+if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
 </script>
 </body>
 </html>
