@@ -199,6 +199,44 @@ body {
 .prof-field { text-align:left; background:var(--purple-softer); border-radius:var(--r-md); padding:12px 15px; margin-top:10px; }
 .prof-field .l { font-size:11px; color:var(--ink-3); font-weight:600; }
 .prof-field .v { font-size:14px; font-weight:700; margin-top:2px; }
+.acc-welcome { text-align:center; }
+/* Account hero */
+.prof-card { text-align:left; }
+.acc-hero { display:flex; align-items:center; gap:14px; }
+.acc-hero-ava { width:56px; height:56px; flex-shrink:0; border-radius:50%; background:linear-gradient(135deg,#6C5CD8,#8273E6); color:#fff; display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:800; letter-spacing:-.5px; }
+.acc-hero-info { flex:1; min-width:0; }
+.acc-hero-name { font-size:18px; font-weight:800; letter-spacing:-0.02em; }
+.acc-hero-mail { font-size:12.5px; color:var(--ink-3); font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.acc-badge { flex-shrink:0; font-size:10.5px; font-weight:800; color:var(--green); background:#E7F9EF; padding:5px 9px; border-radius:var(--r-pill); }
+/* Account sections */
+.acc-sec { margin-top:22px; }
+.acc-sec-title { font-size:13px; font-weight:800; color:var(--ink-2); text-transform:uppercase; letter-spacing:.04em; margin:0 4px 10px; }
+.acc-card { background:#fff; border-radius:var(--r-md); box-shadow:var(--shadow-sm); overflow:hidden; }
+.acc-row { display:flex; align-items:center; gap:13px; padding:13px 15px; border-bottom:1px solid var(--line); }
+.acc-row:last-child { border-bottom:none; }
+.acc-ic { width:36px; height:36px; flex-shrink:0; border-radius:10px; background:var(--purple-soft); color:var(--purple); display:flex; align-items:center; justify-content:center; }
+.acc-row-txt { min-width:0; }
+.acc-row-l { font-size:11px; color:var(--ink-3); font-weight:600; }
+.acc-row-v { font-size:14px; font-weight:700; margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.acc-edit { width:calc(100% - 30px); margin:4px 15px 14px; background:var(--purple-softer); color:var(--purple); border:1.5px solid var(--purple-soft); border-radius:var(--r-sm); font-family:inherit; font-size:13px; font-weight:700; padding:11px; cursor:pointer; }
+.acc-link { display:flex; align-items:center; gap:13px; width:100%; padding:14px 15px; border:none; border-bottom:1px solid var(--line); background:none; font-family:inherit; cursor:pointer; text-align:left; }
+.acc-link:last-child { border-bottom:none; }
+.acc-link:active { background:var(--purple-softer); }
+.acc-link-l { flex:1; font-size:14px; font-weight:600; color:var(--ink); }
+.acc-chev { color:var(--ink-3); }
+.acc-danger .acc-ic { background:#FDE7EF; color:#E0517B; }
+.acc-danger .acc-link-l { color:#E0517B; }
+/* Recently viewed */
+.acc-recent { display:flex; gap:12px; overflow-x:auto; scrollbar-width:none; padding:2px 2px 4px; }
+.acc-recent::-webkit-scrollbar { display:none; }
+.acc-mini { flex-shrink:0; width:82px; background:#fff; border:none; border-radius:var(--r-md); box-shadow:var(--shadow-sm); padding:12px 8px; display:flex; flex-direction:column; align-items:center; gap:6px; cursor:pointer; font-family:inherit; transition:transform .15s; }
+.acc-mini:active { transform:scale(.95); }
+.acc-mini-ava { width:48px; height:48px; border-radius:50%; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; color:#fff; font-size:16px; font-weight:800; }
+.acc-mini-ava .ava-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.acc-mini-name { font-size:12px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; }
+.acc-mini-rating { display:inline-flex; align-items:center; gap:2px; font-size:11px; font-weight:700; color:var(--star); }
+.acc-mini-rating svg { width:10px; height:10px; }
+.acc-foot { text-align:center; font-size:11.5px; color:var(--ink-3); margin-top:26px; padding:0 20px; }
 
 /* ── BOTTOM SHEET ────────────────────────────────── */
 .sheet { position:fixed; inset:0; z-index:100; display:none; }
@@ -318,7 +356,7 @@ body {
   <!-- ════════ PROFILE (user's own) ════════ -->
   <section class="view" id="profileView">
     <header class="dhead"><div class="dhead-bar"><span style="width:42px"></span><span class="dhead-title">My Account</span><span style="width:42px"></span></div></header>
-    <div class="prof-body"><div class="prof-card" id="profCard"></div></div>
+    <div class="prof-body" id="profBody"></div>
   </section>
 
   <!-- ════════ BOTTOM NAV ════════ -->
@@ -567,6 +605,11 @@ const ICO={
   mail:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>`,
   globe:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
   ig:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>`,
+  user:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>`,
+  chat:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>`,
+  info:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>`,
+  logout:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>`,
+  chev:`<svg class="acc-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>`,
 };
 
 /* ── Matching ── */
@@ -695,10 +738,35 @@ function contactSection(t){
   }
   return block;
 }
+/* ── Recently viewed + per-trainer contact-view logging ── */
+function pushRecent(t){
+  let arr=[]; try{ arr=JSON.parse(localStorage.getItem('ccc_recent')||'[]'); }catch(_){}
+  arr=arr.filter(e=>e!==t.email); arr.unshift(t.email); arr=arr.slice(0,8);
+  localStorage.setItem('ccc_recent',JSON.stringify(arr));
+}
+function getRecent(){
+  let arr=[]; try{ arr=JSON.parse(localStorage.getItem('ccc_recent')||'[]'); }catch(_){}
+  return arr.map(e=>TRAINERS.find(t=>t.email===e)).filter(Boolean);
+}
+const loggedViews=new Set();
+function logContactView(t){
+  if(!SIGNUP_ENDPOINT) return;
+  let u=null; try{ u=JSON.parse(localStorage.getItem('ccc_user')||'null'); }catch(_){}
+  if(!u) return;
+  if(loggedViews.has(t.email)) return; loggedViews.add(t.email);
+  fetch(SIGNUP_ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({
+    name:u.name, email:u.email, phone:u.phone,
+    trainer:t.name, interest:primaryRole(t), courses:t.courses.join(", "), trainerCity:t.city,
+    ts:new Date().toISOString(), source:'contact-view'
+  })}).catch(()=>{});
+}
+
 function openDetail(idx){
   currentIdx=idx;
   const t=TRAINERS[idx];
   const unlocked=isUnlocked();
+  pushRecent(t);
+  if(unlocked) logContactView(t);
   const courseChips=t.courses.map(c=>`<span class="chip course">${esc(c)}</span>`).join("");
   const svcChips=t.services.map(s=>`<span class="chip service">${esc(s)}</span>`).join("");
   const areaLine=t.areas?`Serving ${esc(t.areas)} in ${esc(t.city)}. `:`Based in ${esc(t.city)}. `;
@@ -748,19 +816,86 @@ document.querySelectorAll(".bnav-item").forEach(b=>{
 });
 
 /* ── Profile (user's own account) ── */
-function renderProfile(){
-  const u=isUnlocked()?JSON.parse(localStorage.getItem('ccc_user')):null;
-  const card=document.getElementById("profCard");
-  if(u){
-    card.innerHTML=`<div class="prof-emoji">✅</div><h2>You're all set!</h2><p>Contact details are unlocked across the whole directory.</p>
-      <div class="prof-field"><div class="l">Name</div><div class="v">${esc(u.name)}</div></div>
-      <div class="prof-field"><div class="l">Email</div><div class="v">${esc(u.email)}</div></div>
-      <div class="prof-field"><div class="l">Phone</div><div class="v">${esc(u.phone)}</div></div>`;
-  } else {
-    card.innerHTML=`<div class="prof-emoji">🐾</div><h2>Welcome to Canines Can Care</h2><p>Browse certified trainers for free. Sign up once to unlock contact details for everyone.</p><button class="btn btn-fill" style="width:100%;margin-top:18px" id="profUnlock">🔓 Sign up — free</button>`;
-    const b=document.getElementById("profUnlock"); if(b) b.addEventListener("click",openSignup);
-  }
+function miniCardHTML(t){
+  const idx=TRAINERS.indexOf(t);
+  return `<button class="acc-mini" data-idx="${idx}">
+    <div class="acc-mini-ava" style="background:${t.grad}">${initials(t.name)}<img class="ava-img" src="${t.avatarUrl}" alt="" loading="lazy" onerror="this.remove()"></div>
+    <div class="acc-mini-name">${esc(t.name.split(" ")[0])}</div>
+    <div class="acc-mini-rating">${ICO.star}${t.rating}</div>
+  </button>`;
 }
+function renderProfile(){
+  let u=null; try{ u=isUnlocked()?JSON.parse(localStorage.getItem('ccc_user')):null; }catch(_){}
+  const recent=getRecent();
+  const body=document.getElementById("profBody");
+  let html="";
+
+  // ── Header card ──
+  if(u){
+    html+=`<div class="prof-card">
+      <div class="acc-hero">
+        <div class="acc-hero-ava">${esc(initials(u.name))}</div>
+        <div class="acc-hero-info"><div class="acc-hero-name">${esc(u.name)}</div><div class="acc-hero-mail">${esc(u.email)}</div></div>
+        <span class="acc-badge">✓ Unlocked</span>
+      </div>
+    </div>`;
+  } else {
+    html+=`<div class="prof-card acc-welcome">
+      <div class="prof-emoji">🐾</div><h2>Welcome to Canines Can Care</h2>
+      <p>Browse certified trainers for free. Sign up once to unlock contact details for everyone.</p>
+      <button class="btn btn-fill" style="width:100%;margin-top:18px" id="profUnlock">🔓 Sign up — free</button>
+    </div>`;
+  }
+
+  // ── Personal information ──
+  if(u){
+    html+=`<div class="acc-sec">
+      <div class="acc-sec-title">Personal information</div>
+      <div class="acc-card">
+        <div class="acc-row"><span class="acc-ic">${ICO.user}</span><div class="acc-row-txt"><div class="acc-row-l">Full name</div><div class="acc-row-v">${esc(u.name)}</div></div></div>
+        <div class="acc-row"><span class="acc-ic">${ICO.mail}</span><div class="acc-row-txt"><div class="acc-row-l">Email</div><div class="acc-row-v">${esc(u.email)}</div></div></div>
+        <div class="acc-row"><span class="acc-ic">${ICO.phone}</span><div class="acc-row-txt"><div class="acc-row-l">Phone</div><div class="acc-row-v">${esc(u.phone)}</div></div></div>
+        <button class="acc-edit" id="editInfo">Edit details</button>
+      </div>
+    </div>`;
+  }
+
+  // ── Recently viewed ──
+  if(recent.length){
+    html+=`<div class="acc-sec">
+      <div class="acc-sec-title">Recently viewed</div>
+      <div class="acc-recent">${recent.map(miniCardHTML).join("")}</div>
+    </div>`;
+  }
+
+  // ── More ──
+  html+=`<div class="acc-sec">
+    <div class="acc-sec-title">More</div>
+    <div class="acc-card">
+      <button class="acc-link" data-act="chat"><span class="acc-ic">${ICO.chat}</span><span class="acc-link-l">Chat with our helper</span>${ICO.chev}</button>
+      <button class="acc-link" data-act="about"><span class="acc-ic">${ICO.info}</span><span class="acc-link-l">About Canines Can Care</span>${ICO.chev}</button>
+      ${u?`<button class="acc-link acc-danger" data-act="reset"><span class="acc-ic">${ICO.logout}</span><span class="acc-link-l">Reset my data</span>${ICO.chev}</button>`:""}
+    </div>
+  </div>
+  <div class="acc-foot">Curated by Canines Can Care · Certified trainers only 🐶</div>`;
+
+  body.innerHTML=html;
+
+  const b=document.getElementById("profUnlock"); if(b) b.addEventListener("click",openSignup);
+  const ed=document.getElementById("editInfo"); if(ed) ed.addEventListener("click",openSignup);
+}
+document.getElementById("profBody").addEventListener("click",e=>{
+  const mini=e.target.closest(".acc-mini"); if(mini){ openDetail(+mini.dataset.idx); return; }
+  const link=e.target.closest("[data-act]"); if(!link) return;
+  const act=link.dataset.act;
+  if(act==='chat') openChat();
+  else if(act==='about') openChat('about');
+  else if(act==='reset'){
+    if(confirm('Reset your sign-up and recently viewed history on this device?')){
+      localStorage.removeItem('ccc_user'); localStorage.removeItem('ccc_recent'); loggedViews.clear(); renderProfile();
+    }
+  }
+});
 
 /* ── Sign-up sheet ── */
 const signupSheet=document.getElementById("signupSheet");
@@ -930,10 +1065,11 @@ function goNode(key){
   const typing=showTyping();
   setTimeout(()=>{ typing.remove(); addBubble(n.msgFn?n.msgFn():n.msg,"bot"); renderQuick(n.opts); }, 450);
 }
-function openChat(){
+function openChat(startNode){
   chatSheet.classList.add("open");
   const dot=chatFab.querySelector(".chat-fab-dot"); if(dot) dot.style.display="none";
-  if(!chatStarted){ chatStarted=true; goNode("start"); }
+  if(!chatStarted){ chatStarted=true; goNode(startNode||"start"); }
+  else if(startNode) goNode(startNode);
 }
 chatFab.addEventListener("click",openChat);
 document.getElementById("chatClose").addEventListener("click",()=>closeSheet(chatSheet));
