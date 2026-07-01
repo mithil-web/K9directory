@@ -8,12 +8,12 @@
  * web app keeps running the old code.
  *
  * Rows are written to a tab called "Signups":
- *   Timestamp | Name | Email | Phone | Source
+ *   Timestamp | Name | Email | Phone | Trainer | Interest | Courses | Trainer City | Source
  */
 
 // OPTION A (recommended, unambiguous): paste your Sheet's ID here.
 // Get it from the sheet URL: docs.google.com/spreadsheets/d/THIS_LONG_ID/edit
-var SHEET_ID = "";
+var SHEET_ID = "1VIXaNbGqJ6FCgxoTFk9k_2DXlgJdRhY_VwNU9F-JtF4";
 
 function getSpreadsheet() {
   if (SHEET_ID) return SpreadsheetApp.openById(SHEET_ID);
@@ -24,13 +24,17 @@ function writeRow(data) {
   var ss = getSpreadsheet();
   var sheet = ss.getSheetByName('Signups') || ss.insertSheet('Signups');
   if (sheet.getLastRow() === 0) {
-    sheet.appendRow(['Timestamp', 'Name', 'Email', 'Phone', 'Source']);
+    sheet.appendRow(['Timestamp', 'Name', 'Email', 'Phone', 'Trainer', 'Interest', 'Courses', 'Trainer City', 'Source']);
   }
   sheet.appendRow([
     data.ts || new Date().toISOString(),
     data.name || '',
     data.email || '',
     data.phone || '',
+    data.trainer || '',
+    data.interest || '',
+    data.courses || '',
+    data.trainerCity || '',
     data.source || 'ccc-directory'
   ]);
   // Return where it wrote, so the browser test reveals the actual target sheet.

@@ -267,7 +267,6 @@ body {
   <!-- ════════ BOTTOM NAV ════════ -->
   <nav class="bnav">
     <button class="bnav-item active" data-nav="home"><span class="bnav-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></span>Home</button>
-    <button class="bnav-item" data-nav="search"><span class="bnav-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>Search</button>
     <button class="bnav-item" data-nav="profile"><span class="bnav-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>Account</button>
   </nav>
 
@@ -513,7 +512,8 @@ function renderCats(){
   ).join("");
 }
 function renderFilters(){
-  document.getElementById("filterRow").innerHTML=FILTERS.map(f=>
+  const cityPill=`<button class="fpill ${userCity?'active':''}" data-filter="city"><span class="em">📍</span>${esc(userCity||'All India')} <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="margin-left:1px"><path d="m6 9 6 6 6-6"/></svg></button>`;
+  document.getElementById("filterRow").innerHTML=cityPill+FILTERS.map(f=>
     `<button class="fpill ${activeFilters.has(f.key)?'active':''}" data-filter="${f.key}"><span class="em">${f.emoji}</span>${f.label}</button>`
   ).join("");
 }
@@ -546,6 +546,7 @@ document.getElementById("catRail").addEventListener("click",e=>{
 document.getElementById("filterRow").addEventListener("click",e=>{
   const b=e.target.closest("[data-filter]"); if(!b)return;
   const k=b.dataset.filter;
+  if(k==='city'){ openCitySheet(); return; }
   if(k==='near' && !userCity){ openCitySheet(); return; }
   activeFilters.has(k)?activeFilters.delete(k):activeFilters.add(k);
   renderHome();
@@ -585,7 +586,7 @@ function openDetail(idx){
   const tags=specTags(t).map(s=>`<span class="stag">${s.emoji} ${s.label}</span>`).join("");
   const cta = unlocked
     ? (t.phone?`<a class="btn btn-fill" href="tel:${esc(t.phone)}">${ICO.phone}Call ${esc(t.name.split(" ")[0])}</a>`:`<a class="btn btn-fill" href="mailto:${esc(t.email)}">${ICO.mail}Email ${esc(t.name.split(" ")[0])}</a>`)
-    : `<button class="btn btn-fill" id="ctaUnlock">🔓 Unlock contact — free</button>`;
+    : "";
 
   detailBody.innerHTML=`
     <div class="dprofile">
@@ -608,10 +609,9 @@ function openDetail(idx){
     ${courseChips?`<div class="dsection"><div class="dsection-title">Courses Completed</div><div class="chips">${courseChips}</div></div>`:""}
     ${svcChips?`<div class="dsection"><div class="dsection-title">Services Offered</div><div class="chips">${svcChips}</div></div>`:""}
     <div class="dsection"><div class="dsection-title">Contact</div>${contactSection(t)}</div>
-    <div class="dcta">${cta}</div>`;
+    ${cta?`<div class="dcta">${cta}</div>`:""}`;
 
   const u=document.getElementById("unlockBtn"); if(u) u.addEventListener("click",openSignup);
-  const c=document.getElementById("ctaUnlock"); if(c) c.addEventListener("click",openSignup);
   showView("detailView");
 }
 
@@ -644,14 +644,35 @@ function renderProfile(){
 
 /* ── Sign-up sheet ── */
 const signupSheet=document.getElementById("signupSheet");
-function openSignup(){ signupSheet.classList.add("open"); }
+let signupContext=null;
+function openSignup(){
+  // Capture which trainer / category drove the sign-up (if opened from a profile)
+  const detailOpen=document.getElementById("detailView").classList.contains("active");
+  if(detailOpen && currentIdx!=null){
+    const t=TRAINERS[currentIdx];
+    signupContext={ trainer:t.name, city:t.city, interest:primaryRole(t), courses:t.courses.join(", ") };
+  } else {
+    signupContext=null;
+  }
+  signupSheet.classList.add("open");
+}
 function closeSheet(s){ s.classList.remove("open"); }
 document.querySelectorAll("[data-close]").forEach(el=>el.addEventListener("click",()=>el.closest(".sheet").classList.remove("open")));
 
 function saveLead(data){
   localStorage.setItem('ccc_user',JSON.stringify(data));
+  const ctx=signupContext||{};
+  const payload={
+    ...data,
+    trainer: ctx.trainer||'',
+    interest: ctx.interest||'',
+    courses: ctx.courses||'',
+    trainerCity: ctx.city||'',
+    ts:new Date().toISOString(),
+    source:'ccc-directory'
+  };
   if(SIGNUP_ENDPOINT){
-    fetch(SIGNUP_ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({...data,ts:new Date().toISOString(),source:'ccc-directory'})}).catch(()=>{});
+    fetch(SIGNUP_ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)}).catch(()=>{});
   } else {
     console.log('%c[CCC sign-up] wire SIGNUP_ENDPOINT to store this:','color:#6C5CD8;font-weight:bold',data);
   }
