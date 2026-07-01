@@ -20,23 +20,28 @@ function getSpreadsheet() {
   return SpreadsheetApp.getActiveSpreadsheet();        // only works if script is bound
 }
 
+var HEADERS = ['Timestamp', 'Name', 'Email', 'Phone', 'Trainer', 'Interest', 'Courses', 'Trainer City', 'Source'];
+
 function writeRow(data) {
   var ss = getSpreadsheet();
   var sheet = ss.getSheetByName('Signups') || ss.insertSheet('Signups');
-  if (sheet.getLastRow() === 0) {
-    sheet.appendRow(['Timestamp', 'Name', 'Email', 'Phone', 'Trainer', 'Interest', 'Courses', 'Trainer City', 'Source']);
+  // Self-heal the header row so labels always match the columns being written.
+  var current = sheet.getLastRow() === 0 ? [] : sheet.getRange(1, 1, 1, HEADERS.length).getValues()[0];
+  if (current.join('|') !== HEADERS.join('|')) {
+    sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
   }
-  sheet.appendRow([
-    data.ts || new Date().toISOString(),
-    data.name || '',
-    data.email || '',
-    data.phone || '',
-    data.trainer || '',
-    data.interest || '',
-    data.courses || '',
-    data.trainerCity || '',
-    data.source || 'ccc-directory'
-  ]);
+  var map = {
+    'Timestamp': data.ts || new Date().toISOString(),
+    'Name': data.name || '',
+    'Email': data.email || '',
+    'Phone': data.phone || '',
+    'Trainer': data.trainer || '',
+    'Interest': data.interest || '',
+    'Courses': data.courses || '',
+    'Trainer City': data.trainerCity || '',
+    'Source': data.source || 'ccc-directory'
+  };
+  sheet.appendRow(HEADERS.map(function (h) { return map[h]; }));
   // Return where it wrote, so the browser test reveals the actual target sheet.
   return { spreadsheet: ss.getName(), url: ss.getUrl(), tab: sheet.getName(), rows: sheet.getLastRow() };
 }
