@@ -63,7 +63,14 @@ body {
 .locbar-sub { font-size:11.5px; opacity:.8; margin-top:1px; position:relative; z-index:2; padding-left:24px; }
 
 .search-wrap { margin:-30px 20px 0; position:relative; z-index:5; }
-.search-bar { background:var(--white); border-radius:var(--r-md); box-shadow:var(--shadow-md); display:flex; align-items:center; padding:4px 14px 4px 16px; gap:10px; }
+.search-row { display:flex; gap:10px; align-items:stretch; }
+.search-bar { flex:1; min-width:0; background:var(--white); border-radius:var(--r-md); box-shadow:var(--shadow-md); display:flex; align-items:center; padding:4px 14px 4px 16px; gap:10px; }
+.filter-btn { position:relative; flex-shrink:0; width:52px; border:none; border-radius:var(--r-md); background:linear-gradient(135deg,#6C5CD8,#8273E6); color:#fff; box-shadow:var(--shadow-purple); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:transform .15s; }
+.filter-btn svg { stroke:#fff; }
+.filter-btn svg circle { fill:#fff; }
+.filter-btn:active { transform:scale(.93); }
+.filter-badge { position:absolute; top:-6px; right:-6px; min-width:20px; height:20px; padding:0 5px; border-radius:10px; background:#E0517B; color:#fff; font-size:11px; font-weight:800; align-items:center; justify-content:center; border:2.5px solid var(--bg); display:none; }
+.filter-badge.show { display:inline-flex; }
 .search-bar svg { flex-shrink:0; color:var(--purple); }
 .search-bar input { flex:1; border:none; outline:none; font-family:inherit; font-size:14.5px; font-weight:500; color:var(--ink); background:transparent; padding:14px 0; }
 .search-bar input::placeholder { color:var(--ink-3); font-weight:500; }
@@ -222,6 +229,7 @@ body {
 .fcount { background:#fff; color:var(--purple); font-size:11px; font-weight:800; min-width:18px; height:18px; border-radius:9px; display:inline-flex; align-items:center; justify-content:center; padding:0 5px; margin-left:2px; }
 .fpill.applied { background:var(--purple-soft); color:var(--purple); border-color:var(--purple); }
 .fpill.applied .rm { font-size:11px; opacity:.75; margin-left:3px; }
+.fpill.fclear { background:none; border-color:transparent; color:var(--ink-3); font-weight:700; }
 .filter-head { display:flex; align-items:center; justify-content:space-between; margin:2px 0 2px; }
 .clear-link { background:none; border:none; font-family:inherit; font-size:13px; font-weight:700; color:var(--purple); cursor:pointer; padding:6px; }
 .fgroup { padding:16px 0; border-bottom:1px solid var(--line); }
@@ -233,6 +241,33 @@ body {
 .fchip.sel { background:var(--purple-soft); border-color:var(--purple); color:var(--purple); font-weight:700; }
 .filter-foot { position:sticky; bottom:0; background:#fff; padding:14px 0 2px; margin-top:6px; box-shadow:0 -8px 16px rgba(255,255,255,.9); }
 .filter-foot .btn { width:100%; font-size:15px; padding:15px; }
+
+/* ── CHAT HELPER ── */
+.chat-fab { position:fixed; z-index:60; right:calc(50% - 240px + 16px); bottom:calc(96px + env(safe-area-inset-bottom)); width:56px; height:56px; border-radius:50%; border:none; background:linear-gradient(135deg,#6C5CD8,#8273E6); box-shadow:var(--shadow-purple); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:transform .18s; }
+@media (max-width:480px){ .chat-fab { right:16px; } }
+.chat-fab:active { transform:scale(.9); }
+.chat-fab-dot { position:absolute; top:2px; right:2px; width:13px; height:13px; border-radius:50%; background:var(--green); border:2.5px solid #fff; }
+.chat-card { padding:0; display:flex; flex-direction:column; height:78vh; max-height:78vh; }
+.chat-head { display:flex; align-items:center; gap:12px; padding:16px 18px; background:linear-gradient(135deg,#6C5CD8,#8273E6); color:#fff; border-radius:26px 26px 0 0; }
+.chat-ava { width:42px; height:42px; border-radius:50%; background:rgba(255,255,255,.22); display:flex; align-items:center; justify-content:center; font-size:22px; }
+.chat-hinfo { flex:1; }
+.chat-title { font-size:16px; font-weight:800; }
+.chat-status { font-size:11.5px; opacity:.9; display:flex; align-items:center; gap:5px; }
+.chat-live { width:7px; height:7px; border-radius:50%; background:#7CFFB2; box-shadow:0 0 0 3px rgba(124,255,178,.3); }
+.chat-close { width:34px; height:34px; border-radius:50%; border:none; background:rgba(255,255,255,.2); color:#fff; font-size:15px; cursor:pointer; }
+.chat-body { flex:1; overflow-y:auto; padding:18px; display:flex; flex-direction:column; gap:10px; background:var(--bg); }
+.bubble { max-width:80%; padding:11px 14px; font-size:13.5px; line-height:1.5; border-radius:16px; animation:bubbleIn .28s cubic-bezier(0.22,1,0.36,1); }
+@keyframes bubbleIn { from { opacity:0; transform:translateY(8px); } }
+.bubble.bot { align-self:flex-start; background:#fff; color:var(--ink); border-bottom-left-radius:5px; box-shadow:var(--shadow-sm); }
+.bubble.user { align-self:flex-end; background:var(--purple); color:#fff; border-bottom-right-radius:5px; }
+.chat-quick { display:flex; flex-wrap:wrap; gap:8px; padding:12px 14px calc(14px + env(safe-area-inset-bottom)); border-top:1px solid var(--line); background:#fff; }
+.qbtn { font-family:inherit; font-size:12.5px; font-weight:700; color:var(--purple); background:var(--purple-softer); border:1.5px solid var(--purple-soft); border-radius:var(--r-pill); padding:9px 13px; cursor:pointer; transition:transform .15s, background .2s; }
+.qbtn:active { transform:scale(.95); }
+.qbtn:hover { background:var(--purple-soft); }
+.typing { align-self:flex-start; display:flex; gap:4px; padding:13px 15px; background:#fff; border-radius:16px; border-bottom-left-radius:5px; box-shadow:var(--shadow-sm); }
+.typing span { width:7px; height:7px; border-radius:50%; background:var(--ink-3); animation:blink 1.2s infinite; }
+.typing span:nth-child(2){ animation-delay:.2s; } .typing span:nth-child(3){ animation-delay:.4s; }
+@keyframes blink { 0%,60%,100%{ opacity:.3; } 30%{ opacity:1; } }
 </style>
 </head>
 <body>
@@ -250,10 +285,15 @@ body {
     </header>
 
     <div class="search-wrap">
-      <div class="search-bar">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-        <input id="searchInput" type="search" placeholder="Search trainer name or city…" autocomplete="off" />
-        <svg class="mic" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+      <div class="search-row">
+        <div class="search-bar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input id="searchInput" type="search" placeholder="Search trainer name or city…" autocomplete="off" />
+        </div>
+        <button class="filter-btn" id="openFilters" aria-label="Filters">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="9" cy="6" r="2.2" fill="var(--purple)"/><circle cx="15" cy="12" r="2.2" fill="var(--purple)"/><circle cx="8" cy="18" r="2.2" fill="var(--purple)"/></svg>
+          <span class="filter-badge" id="filterBadge"></span>
+        </button>
       </div>
     </div>
 
@@ -323,6 +363,24 @@ body {
       <div class="filter-head"><h3>Filters</h3><button class="clear-link" id="clearFilters">Clear all</button></div>
       <div id="filterGroups"></div>
       <div class="filter-foot"><button class="btn btn-fill" id="applyFilters">Show <span id="fShowCount">0</span> trainers</button></div>
+    </div>
+  </div>
+
+  <!-- ════════ CHAT HELPER ════════ -->
+  <button class="chat-fab" id="chatFab" aria-label="Chat helper">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+    <span class="chat-fab-dot"></span>
+  </button>
+  <div class="sheet" id="chatSheet">
+    <div class="sheet-bg" data-close></div>
+    <div class="sheet-card chat-card">
+      <div class="chat-head">
+        <div class="chat-ava">🐾</div>
+        <div class="chat-hinfo"><div class="chat-title">CCC Helper</div><div class="chat-status"><span class="chat-live"></span>Online · instant replies</div></div>
+        <button class="chat-close" id="chatClose" aria-label="Close">✕</button>
+      </div>
+      <div class="chat-body" id="chatBody"></div>
+      <div class="chat-quick" id="chatQuick"></div>
     </div>
   </div>
 
@@ -571,13 +629,15 @@ function renderCats(){
 function optLabel(g,v){ const o=g.opts.find(x=>x.v===v); return o?o.label:v; }
 function renderFilters(){
   const n=filterCount();
-  const tune=`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="9" cy="6" r="2" fill="var(--white)"/><circle cx="15" cy="12" r="2" fill="var(--white)"/><circle cx="8" cy="18" r="2" fill="var(--white)"/></svg>`;
+  const badge=document.getElementById("filterBadge");
+  badge.textContent=n; badge.classList.toggle("show", n>0);
   let chips="";
   FILTER_GROUPS.forEach(g=>{ F[g.key].forEach(v=>{
     chips+=`<button class="fpill applied" data-remove="${g.key}|${esc(v)}">${esc(String(optLabel(g,v)))} <span class="rm">✕</span></button>`;
   });});
-  const mainBtn=`<button class="fpill fpill-main ${n?'active':''}" id="openFilters">${tune} Filters${n?` <span class="fcount">${n}</span>`:''}</button>`;
-  document.getElementById("filterRow").innerHTML=mainBtn+chips;
+  const fr=document.getElementById("filterRow");
+  fr.innerHTML = chips ? chips+`<button class="fpill fclear" id="clearRowFilters">Clear all</button>` : "";
+  fr.style.display = chips ? "flex" : "none";
 }
 function renderHome(){
   renderCats(); renderFilters();
@@ -608,8 +668,9 @@ document.getElementById("catRail").addEventListener("click",e=>{
 document.getElementById("filterRow").addEventListener("click",e=>{
   const rm=e.target.closest("[data-remove]");
   if(rm){ const [g,v]=rm.dataset.remove.split("|"); F[g].delete(v); renderHome(); return; }
-  if(e.target.closest("#openFilters")) openFilterSheet();
+  if(e.target.closest("#clearRowFilters")){ FILTER_GROUPS.forEach(g=>F[g.key].clear()); renderHome(); }
 });
+document.getElementById("openFilters").addEventListener("click",openFilterSheet);
 document.getElementById("searchInput").addEventListener("input",e=>{ searchQ=e.target.value.trim().toLowerCase(); renderHome(); });
 homeSections.addEventListener("click",e=>{ const c=e.target.closest(".tcard"); if(c) openDetail(+c.dataset.idx); });
 
@@ -675,7 +736,7 @@ function openDetail(idx){
 }
 
 /* ── View routing ── */
-function showView(id){ document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id===id)); window.scrollTo(0,0); }
+function showView(id){ document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id===id)); window.scrollTo(0,0); const fab=document.getElementById("chatFab"); if(fab) fab.style.display = id==="homeView" ? "flex" : "none"; }
 document.getElementById("backBtn").addEventListener("click",()=>showView("homeView"));
 document.querySelectorAll(".bnav-item").forEach(b=>{
   b.addEventListener("click",()=>{
@@ -813,6 +874,86 @@ document.getElementById("clearFilters").addEventListener("click",()=>{
 });
 document.getElementById("applyFilters").addEventListener("click",()=>{ closeSheet(filterSheet); renderHome(); });
 filterSheet.querySelector(".sheet-bg").addEventListener("click",renderHome);
+
+/* ── Chat helper (rule-based, no AI) ── */
+const chatFab=document.getElementById("chatFab");
+const chatSheet=document.getElementById("chatSheet");
+const chatBody=document.getElementById("chatBody");
+const chatQuick=document.getElementById("chatQuick");
+let chatStarted=false;
+const BOT={
+  start:{ msg:"Hi! 🐾 I'm the Canines Can Care helper. How can I help you today?",
+    opts:[
+      {t:"🔎 Find the right trainer", go:"find"},
+      {t:"📞 How do I get a trainer's number?", go:"contact"},
+      {t:"📍 Which cities are covered?", go:"cities"},
+      {t:"💸 Is it free?", go:"free"},
+      {t:"🐶 About Canines Can Care", go:"about"},
+    ]},
+  find:{ msg:"Sure! What does your dog need help with?",
+    opts:[
+      {t:"🧠 Behaviour problems", act:["spec","behaviour"]},
+      {t:"⚡ Aggression", act:["spec","aggression"]},
+      {t:"🐕‍🦺 Therapy / assistance", act:["spec","therapy"]},
+      {t:"🦴 Basic obedience", act:["spec","basic"]},
+      {t:"🎓 Advanced training", act:["spec","advanced"]},
+      {t:"🏠 Boarding / pet sitting", act:["service","boarding"]},
+      {t:"↩︎ Back", go:"start"},
+    ]},
+  contact:{ msg:"Every trainer's phone & email is just one free sign-up away 🔓\n\n1. Open any trainer's profile\n2. Tap “Unlock — it's free”\n3. Enter your name, email & phone\n\nAfter that, contacts are visible for every trainer.",
+    opts:[{t:"👍 Got it", go:"start"},{t:"🔎 Find a trainer", go:"find"}]},
+  cities:{ msgFn:()=>"We currently have certified trainers in:\n\n"+cities.join(" · ")+"\n\nTap below to filter by your city 📍",
+    opts:[{t:"🎛️ Open filters", action:"openFilters"},{t:"↩︎ Back", go:"start"}]},
+  free:{ msg:"Yes — 100% free! 🎉 Browsing is free, and unlocking every trainer's contact details is free too. You just sign up once with your name, email & phone.",
+    opts:[{t:"🔓 How to unlock", go:"contact"},{t:"↩︎ Back", go:"start"}]},
+  about:{ msg:"Canines Can Care is a curated directory of dog trainers certified through Shirin Dhabhar's Professional Canine Trainer Course. 🐶\n\nEvery trainer here is verified — no one can list themselves.",
+    opts:[{t:"🔎 Find a trainer", go:"find"},{t:"↩︎ Back", go:"start"}]},
+};
+function chatScroll(){ chatBody.scrollTop=chatBody.scrollHeight; }
+function addBubble(text,who){
+  const d=document.createElement("div"); d.className="bubble "+who;
+  d.innerHTML=esc(text).replace(/\n/g,"<br>");
+  chatBody.appendChild(d); chatScroll();
+}
+function showTyping(){
+  const d=document.createElement("div"); d.className="typing";
+  d.innerHTML="<span></span><span></span><span></span>";
+  chatBody.appendChild(d); chatScroll(); return d;
+}
+function renderQuick(opts){
+  chatQuick.innerHTML=opts.map((o,i)=>`<button class="qbtn" data-i="${i}">${esc(o.t)}</button>`).join("");
+  chatQuick._opts=opts;
+}
+function goNode(key){
+  const n=BOT[key]; if(!n) return;
+  chatQuick.innerHTML="";
+  const typing=showTyping();
+  setTimeout(()=>{ typing.remove(); addBubble(n.msgFn?n.msgFn():n.msg,"bot"); renderQuick(n.opts); }, 450);
+}
+function openChat(){
+  chatSheet.classList.add("open");
+  const dot=chatFab.querySelector(".chat-fab-dot"); if(dot) dot.style.display="none";
+  if(!chatStarted){ chatStarted=true; goNode("start"); }
+}
+chatFab.addEventListener("click",openChat);
+document.getElementById("chatClose").addEventListener("click",()=>closeSheet(chatSheet));
+chatQuick.addEventListener("click",e=>{
+  const b=e.target.closest(".qbtn"); if(!b) return;
+  const o=(chatQuick._opts||[])[+b.dataset.i]; if(!o) return;
+  addBubble(o.t,"user"); chatQuick.innerHTML="";
+  if(o.act){
+    const [g,v]=o.act; FILTER_GROUPS.forEach(x=>F[x.key].clear()); activeCat='all'; searchQ=''; F[g].add(v);
+    const typing=showTyping();
+    setTimeout(()=>{ typing.remove();
+      const cnt=getMatches().length;
+      addBubble(`Great — I found ${cnt} trainer${cnt===1?'':'s'} for that. Showing them now 👇`,"bot");
+      setTimeout(()=>{ closeSheet(chatSheet); renderHome(); showView("homeView"); window.scrollTo({top:0,behavior:'smooth'}); }, 750);
+    }, 450);
+    return;
+  }
+  if(o.action==="openFilters"){ closeSheet(chatSheet); openFilterSheet(); return; }
+  if(o.go) goNode(o.go);
+});
 
 /* ── Init ── */
 updateLocBar();
