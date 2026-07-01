@@ -11,8 +11,17 @@
  *   Timestamp | Name | Email | Phone | Source
  */
 
+// OPTION A (recommended, unambiguous): paste your Sheet's ID here.
+// Get it from the sheet URL: docs.google.com/spreadsheets/d/THIS_LONG_ID/edit
+var SHEET_ID = "";
+
+function getSpreadsheet() {
+  if (SHEET_ID) return SpreadsheetApp.openById(SHEET_ID);
+  return SpreadsheetApp.getActiveSpreadsheet();        // only works if script is bound
+}
+
 function writeRow(data) {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();      // bound to this sheet
+  var ss = getSpreadsheet();
   var sheet = ss.getSheetByName('Signups') || ss.insertSheet('Signups');
   if (sheet.getLastRow() === 0) {
     sheet.appendRow(['Timestamp', 'Name', 'Email', 'Phone', 'Source']);
@@ -24,6 +33,8 @@ function writeRow(data) {
     data.phone || '',
     data.source || 'ccc-directory'
   ]);
+  // Return where it wrote, so the browser test reveals the actual target sheet.
+  return { spreadsheet: ss.getName(), url: ss.getUrl(), tab: sheet.getName(), rows: sheet.getLastRow() };
 }
 
 function json(obj) {
@@ -40,8 +51,8 @@ function doPost(e) {
     } else if (e && e.parameter) {
       data = e.parameter;                              // fallback: form-encoded
     }
-    writeRow(data);
-    return json({ ok: true });
+    var info = writeRow(data);
+    return json({ ok: true, wrote: info });
   } catch (err) {
     return json({ ok: false, error: String(err) });
   }
@@ -54,14 +65,14 @@ function doPost(e) {
 function doGet(e) {
   if (e && e.parameter && (e.parameter.name || e.parameter.email || e.parameter.phone)) {
     try {
-      writeRow({
+      var info = writeRow({
         ts: new Date().toISOString(),
         name: e.parameter.name,
         email: e.parameter.email,
         phone: e.parameter.phone,
         source: 'browser-test'
       });
-      return json({ ok: true, wrote: true });
+      return json({ ok: true, wrote: info });
     } catch (err) {
       return json({ ok: false, error: String(err) });
     }
